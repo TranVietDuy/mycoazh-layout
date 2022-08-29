@@ -1,0 +1,5 @@
+.MuiMenu-paper {
+    position: absolute !important;
+    right: 20px !important;
+    left: auto !important;
+}
