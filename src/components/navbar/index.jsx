@@ -1,38 +1,39 @@
+import React from "react"
+import { Link } from "react-router-dom"
+
 import {
   Avatar,
   Box,
+  Collapse,
+  Divider,
+  Drawer,
   IconButton,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
   Menu,
   MenuItem,
   Toolbar,
   Tooltip,
   Typography,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Divider,
-  Collapse,
-  Button,
 } from "@mui/material"
 import { AppBar, Search, SearchIconWrapper, StyledInputBase } from "./styles"
 
 import MenuIcon from "@mui/icons-material/Menu"
 import SearchIcon from "@mui/icons-material/Search"
 
-import { useState } from "react"
 import {
-  Home,
-  People,
-  Person,
   ExpandLess,
   ExpandMore,
-  SportsSoccer,
-  SettingsOutlined,
+  Home,
   NoteAltOutlined,
+  People,
+  Person,
+  SettingsOutlined,
+  SportsSoccer,
 } from "@mui/icons-material"
+import { useState } from "react"
 const settings = ["Profile", "Account", "Dashboard", "Logout"]
 
 const Navbar = () => {
@@ -57,11 +58,13 @@ const Navbar = () => {
   )
 
   const Icon = () => (
-    <img
-      src="https://mycoazh.fi/img/mycoazh_logo.png"
-      alt="logo"
-      style={{ height: "50px" }}
-    />
+    <Link to="/">
+      <img
+        src="https://mycoazh.fi/img/mycoazh_logo.png"
+        alt="logo"
+        style={{ height: "50px" }}
+      />
+    </Link>
   )
 
   const StyledSearchbar = () => (
@@ -75,16 +78,27 @@ const Navbar = () => {
 
   const MenuSettings = () => {
     return (
-      <Box sx={{ flexGrow: 0, position: "relative" }}>
+      <Box
+        sx={{
+          flexGrow: 0,
+          position: "relative",
+        }}
+      >
         <Tooltip title="Open settings">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
             <Avatar
-              alt="Remy Sharp"
+              alt="User"
               src="https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
             />
           </IconButton>
         </Tooltip>
         <Menu
+          PaperProps={{
+            sx: {
+              backgroundColor: "rgba(0, 76, 84,0.5)",
+              color: "white",
+            },
+          }}
           sx={{ mt: "45px" }}
           id="menu-appbar"
           anchorEl={anchorElUser}
@@ -102,7 +116,7 @@ const Navbar = () => {
     )
   }
   //sidebar
-  const [open, setState] = useState(false)
+  const [open, setOpen] = useState(false)
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -111,7 +125,7 @@ const Navbar = () => {
     ) {
       return
     }
-    setState(open)
+    setOpen(open)
   }
 
   //expand submenu
@@ -125,74 +139,120 @@ const Navbar = () => {
     <Box
       sx={{
         width: 438,
-        backgroundColor: "#004C54",
-        boxShadow: "10px 4px 4px rgba(0, 0, 0, 0.25)",
         p: 2,
         height: 1,
+        color: "white",
       }}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
     >
-      <Box sx={{ height: 50, display: "flex", alignItem: "center" }}>
-        <Typography sx={{ mr: 2 }}>Welcome Temmu! </Typography>
+      <Box sx={{ height: 50, display: "flex", alignItems: "center" }}>
+        <Typography sx={{ mr: 2 }}>Welcome Teemu! </Typography>
         <Avatar
           sx={{ width: 40, height: 40, display: "flex" }}
           src="https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
         />
       </Box>
-      <ListItemButton sx={{ pl: 4 }}>
+      <ListItemButton sx={{ pl: 4 }} onClick={toggleDrawer(false)}>
         <ListItemText primary="Logout" />
       </ListItemButton>
+
       <Divider />
       <List>
-        <ListItemButton Link to="/">
-          <ListItemIcon>
-            <Home />
-          </ListItemIcon>
-          <ListItemText primary="Home" />
-        </ListItemButton>
-        <ListItemButton Link to="/games/:id">
-          <ListItemIcon>
-            <SportsSoccer />
-          </ListItemIcon>
-          <ListItemText primary="Game" />
-        </ListItemButton>
-        <ListItemButton Link to="/players/:id">
-          <ListItemIcon>
-            <Person />
-          </ListItemIcon>
-          <ListItemText primary="Players" />
-        </ListItemButton>
+        <List
+          role="presentation"
+          onClick={toggleDrawer(false)}
+          onKeyDown={toggleDrawer(false)}
+        >
+          <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+            <ListItemButton>
+              <ListItemIcon>
+                <Home fontSize="large" sx={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItemButton>
+          </Link>
+
+          <Link
+            to="/games/:id"
+            style={{ textDecoration: "none", color: "white" }}
+          >
+            <ListItemButton>
+              <ListItemIcon>
+                <SportsSoccer fontSize="large" sx={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary="Game" />
+            </ListItemButton>
+          </Link>
+
+          <Link
+            to="/players/:id"
+            style={{ textDecoration: "none", color: "white" }}
+          >
+            <ListItemButton>
+              <ListItemIcon>
+                <Person fontSize="large" sx={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary="Players" />
+            </ListItemButton>
+          </Link>
+        </List>
         <ListItemButton onClick={handleClick}>
           <ListItemIcon>
-            <People />
+            <People fontSize="large" sx={{ color: "white" }} />
           </ListItemIcon>
           <ListItemText primary="Team" />
           {expand ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
+
         <Collapse in={expand} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }} Link to="/team/:id">
-              <ListItemText primary="Team Statistics" />
-            </ListItemButton>
-            <ListItemButton sx={{ pl: 4 }} Link to="/team/:id">
-              <ListItemText primary="Team Visualizations" />
-            </ListItemButton>
+          <List component="div" disablePadding onClick={toggleDrawer(false)}>
+            <Link
+              to="/team/stat"
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              <ListItemButton sx={{ pl: 20 }}>
+                <ListItemText primary="Team Statistics" />
+              </ListItemButton>
+            </Link>
+
+            <Link
+              to="/team/vis"
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              <ListItemButton sx={{ pl: 20 }}>
+                <ListItemText primary="Team Visualizations" />
+              </ListItemButton>
+            </Link>
           </List>
         </Collapse>
-        <ListItemButton Link to="/note/:id">
-          <ListItemIcon>
-            <NoteAltOutlined />
-          </ListItemIcon>
-          <ListItemText primary="Note" />
-        </ListItemButton>
-        <ListItemButton Link to="/setting">
-          <ListItemIcon>
-            <SettingsOutlined />
-          </ListItemIcon>
-          <ListItemText primary="Setting" />
-        </ListItemButton>
+        <List
+          role="presentation"
+          onClick={toggleDrawer(false)}
+          onKeyDown={toggleDrawer(false)}
+        >
+          <Link
+            to="/note/:id"
+            style={{ textDecoration: "none", color: "white" }}
+          >
+            <ListItemButton>
+              <ListItemIcon>
+                <NoteAltOutlined fontSize="large" sx={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary="Notes" />
+            </ListItemButton>
+          </Link>
+
+          <Link
+            to="/setting/:id"
+            style={{ textDecoration: "none", color: "white" }}
+          >
+            <ListItemButton>
+              <ListItemIcon>
+                <SettingsOutlined fontSize="large" sx={{ color: "white" }} />
+              </ListItemIcon>
+              <ListItemText primary="Setting" />
+            </ListItemButton>
+          </Link>
+        </List>
       </List>
     </Box>
   )
@@ -209,18 +269,32 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 1 }} />
           <StyledSearchbar />
           <Box sx={{ flexGrow: 1 }} />
-          <NoteAltOutlined />
+          <Tooltip title="Note">
+            <IconButton color="inherit">
+              <NoteAltOutlined fontSize="large" />
+            </IconButton>
+          </Tooltip>
           <Box sx={{ flexGrow: 1 }} />
-          <SettingsOutlined />
+          <Tooltip title="Settings">
+            <IconButton color="inherit">
+              <SettingsOutlined fontSize="large" />
+            </IconButton>
+          </Tooltip>
           <Box sx={{ flexGrow: 1 }} />
           <MenuSettings />
         </Toolbar>
       </AppBar>
+
       <Drawer
         open={open}
         anchor="left"
         onClose={toggleDrawer(false)}
-        onOpen={toggleDrawer(true)}
+        PaperProps={{
+          sx: {
+            backgroundColor: "rgba(0, 76, 84,0.5)",
+            fontSize: 4,
+          },
+        }}
       >
         <Toolbar sx={{ visibility: "hidden", height: "70px" }} />
         {list()}

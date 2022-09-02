@@ -3,3 +3,11 @@
     right: 20px !important;
     left: auto !important;
 }
+
+.bg-img {
+    position: fixed;
+    min-height: 100vh;
+    opacity: 0.95;
+    
+}
+

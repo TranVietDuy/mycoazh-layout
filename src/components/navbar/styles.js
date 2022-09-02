@@ -37,5 +37,5 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
   },
-}))
+}));
 
