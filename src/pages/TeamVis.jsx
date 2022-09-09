@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react"
 
 const TeamVis = () => {
-  return (
-    <div>TeamVis</div>
-  )
+	return <div>TeamVis</div>
 }
 
 export default TeamVis
